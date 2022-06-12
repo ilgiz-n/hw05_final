@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load cache %}
+{% block title %}Поcты избранных авторов{% endblock %}
+{% block content %}
+  <h1>Поcты избранных авторов</h1>
+  {% cache 20 index_page page_obj%}
+    {% include 'includes/switcher.html' %}
+    {% if page_obj|length %}
+      {% for post in page_obj %}
+        <article> 
+          {% include 'includes/post.html' %}
+        </article>
+        {% if not forloop.last %}<hr>{% endif %}
+      {% endfor %}
+      {% include 'includes/paginator.html' %} 
+    {% else %}
+      <h3>Вы не подписаны ни на одного автора</h3>
+    {% endif %}
+  {% endcache %}
+{% endblock %}
