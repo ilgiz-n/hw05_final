@@ -11,12 +11,18 @@ from django.urls import reverse
 from posts.models import Comment, Follow, Group, Post, User
 from posts.views import NUMBER_OF_POSTS
 
-# Общие URLs
 INDEX = reverse('posts:index')
 POST_CREATE = reverse('posts:post_create')
 FOLLOW_INDEX = reverse('posts:follow_index')
 
 TEMP_MEDIA_ROOT = tempfile.mkdtemp(dir=settings.BASE_DIR)
+
+POST_MODEL_FIELDS = (
+    'author',
+    'text',
+    'group',
+    'image',
+)
 
 
 @override_settings(MEDIA_ROOT=TEMP_MEDIA_ROOT)
@@ -84,6 +90,13 @@ class PostViewsTests(TestCase):
         self.authorized_client = Client()
         self.authorized_client.force_login(self.user)
 
+    def assertEqual_fields(self, fields, first_obj, second_obj):
+        for field in fields:
+            with self.subTest(field=field):
+                self.assertEqual(
+                    getattr(first_obj, field), getattr(second_obj, field)
+                )
+
     def test_pages_uses_correct_template(self):
         """URL-адрес использует соответствующий шаблон."""
         url_templates_names = (
@@ -113,10 +126,8 @@ class PostViewsTests(TestCase):
             with self.subTest(url=url):
                 response = self.guest_client.get(url)
                 first_object = response.context['page_obj'][0]
-                self.assertEqual(first_object.author, self.post.author)
-                self.assertEqual(first_object.text, self.post.text)
-                self.assertEqual(first_object.group, self.post.group)
-                self.assertEqual(first_object.image, self.post.image)
+                self.assertEqual_fields(
+                    POST_MODEL_FIELDS, first_object, self.post)
 
     def test_index_correct_paginator(self):
         """
@@ -153,15 +164,13 @@ class PostViewsTests(TestCase):
         """Шаблон post_detail.html. Проверка контекста"""
         response = self.authorized_client.get(self.POST_DETAIL)
         first_object = response.context['post']
-        self.assertEqual(first_object.author, self.post.author)
-        self.assertEqual(first_object.text, self.post.text)
-        self.assertEqual(first_object.group, self.post.group)
-        self.assertEqual(first_object.image, self.post.image)
+        self.assertEqual_fields(POST_MODEL_FIELDS, first_object, self.post)
         self.assertIn('form', response.context)
 
     def test_post_detail_with_comment_correct_context(self):
         """Шаблон post_detail.html.
            После успешной отправки комментарий появляется на странице поста"""
+        comment_fields = ('author', 'text')
         comment = Comment.objects.create(
             post=self.post,
             author=self.user,
@@ -169,15 +178,14 @@ class PostViewsTests(TestCase):
         )
         response = self.authorized_client.get(self.POST_DETAIL)
         first_object = response.context['comments'][0]
-        self.assertEqual(first_object.author, comment.author)
-        self.assertEqual(first_object.text, comment.text)
+        self.assertEqual_fields(comment_fields, first_object, comment)
 
     def test_post_create_correct_context(self):
         """Шаблон post_create.html, post_edit.html. Проверка контекста"""
-        url_names = [
+        url_names = (
             POST_CREATE,
             self.POST_EDIT
-        ]
+        )
         for url in url_names:
             with self.subTest(url=url):
                 response = self.authorized_client.get(url)

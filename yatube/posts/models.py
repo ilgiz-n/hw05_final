@@ -20,6 +20,10 @@ class Group(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        verbose_name = 'Группа'
+        verbose_name_plural = 'Группы'
+
 
 class Post(models.Model):
     text = models.TextField(
@@ -52,13 +56,13 @@ class Post(models.Model):
         help_text='Загрузите картинку',
     )
 
+    def __str__(self):
+        return self.text[:POST_OBJECT_NAME_LENGHT]
+
     class Meta:
         ordering = ('-pub_date',)
         verbose_name = 'Пост'
         verbose_name_plural = 'Посты'
-
-    def __str__(self):
-        return self.text[:POST_OBJECT_NAME_LENGHT]
 
 
 class Comment(models.Model):
@@ -86,6 +90,11 @@ class Comment(models.Model):
     def __str__(self):
         return self.text
 
+    class Meta:
+        ordering = ('-created',)
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
+
 
 class Follow(models.Model):
     user = models.ForeignKey(
@@ -103,6 +112,8 @@ class Follow(models.Model):
     )
 
     class Meta:
+        verbose_name = 'Подписка'
+        verbose_name_plural = 'Подписки'
         constraints = [
             models.UniqueConstraint(
                 fields=['author', 'user'], name="unique_following"

@@ -34,7 +34,7 @@
         <img class="card-img my-2" src="{{ im.url }}">
       {% endthumbnail %}
       <p>
-        {{ post.text }}
+        {{ post.text|linebreaksbr }}
       </p>
       {% if post.author == request.user %}
       <a href="{% url 'posts:post_edit' post.id %}"

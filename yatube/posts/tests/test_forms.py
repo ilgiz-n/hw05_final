@@ -69,15 +69,10 @@ class PostFormTests(TestCase):
         )
         post = Post.objects.latest('pub_date')
         self.assertEqual(Post.objects.count(), posts_count + 1)
-        self.assertTrue(
-            Post.objects.filter(
-                id=post.id,
-                text=form_data['text'],
-                author=self.user,
-                group=form_data['group'],
-                image='posts/small.gif'
-            ).exists()
-        )
+        self.assertEqual(post.text, form_data['text'])
+        self.assertEqual(post.author, self.user)
+        self.assertEqual(post.group.id, form_data['group'])
+        self.assertEqual(post.image.name, 'posts/small.gif')
         PROFILE_URL = reverse(
             'posts:profile', kwargs={'username': post.author})
         self.assertRedirects(response, PROFILE_URL)
@@ -104,15 +99,11 @@ class PostFormTests(TestCase):
             data=edited_form_data,
             follow=True,
         )
+        post = Post.objects.get(id=post.id)
         self.assertEqual(response_edited.status_code, HTTPStatus.OK)
-        self.assertTrue(
-            Post.objects.filter(
-                id=post.id,
-                text=edited_form_data['text'],
-                author=self.user,
-                group=edited_form_data['group']
-            ).exists()
-        )
+        self.assertEqual(post.text, edited_form_data['text'])
+        self.assertEqual(post.author, self.user)
+        self.assertEqual(post.group.id, edited_form_data['group'])
         self.assertEqual(Post.objects.count(), posts_count)
         POST_DETAIL_URL = reverse(
             'posts:post_detail', kwargs={'post_id': post.id})
@@ -137,12 +128,7 @@ class PostFormTests(TestCase):
         )
         self.assertEqual(Comment.objects.count(), comments_count + 1)
         comment = Comment.objects.latest('created')
-        self.assertTrue(
-            Comment.objects.filter(
-                id=comment.id,
-                text=form_data['text'],
-                author=form_data['author'],
-                post=form_data['post'],
-            ).exists()
-        )
+        self.assertEqual(comment.text, form_data['text'])
+        self.assertEqual(comment.author, form_data['author'])
+        self.assertEqual(comment.post.id, form_data['post'])
         self.assertRedirects(response, POST_DETAIL_URL)
