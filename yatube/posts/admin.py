@@ -24,6 +24,7 @@ class FollowAdmin(admin.ModelAdmin):
 
 class GroupAdmin(admin.ModelAdmin):
     list_display = ('pk', 'title', 'slug', 'description',)
+    prepopulated_fields = {'slug': ('title',)}
     search_fields = ('description',)
     list_filter = ('title',)
     empty_value_display = '-пусто-'

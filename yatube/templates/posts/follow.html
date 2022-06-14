@@ -4,7 +4,7 @@
 {% block content %}
   <h1>Поcты избранных авторов</h1>
   {% cache 20 index_page page_obj%}
-    {% include 'includes/switcher.html' %}
+    {% include 'includes/switcher.html' with follow=True  %}
     {% if page_obj|length %}
       {% for post in page_obj %}
         <article> 
