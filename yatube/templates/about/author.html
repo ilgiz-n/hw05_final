@@ -1,9 +1,42 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}Об авторе проекта{% endblock %}
 {% block content %}
-<h1>Привет, я автор</h1>
-<p>
-  Тут я размещу информацию о себе, используя свои умения верстать.
-  Картинки, блоки, элементы бустрап. А может быть, просто напишу несколько абзацев текста. 
-</p>
+  <div class="container">
+    <div class="row align-items-center flex-row-reverse">
+      <div class="col-lg-6">
+        <div class="about-text go-to">
+            <h3>Обо мне</h3>
+            <h6 class="theme-color lead">Учусь разработке на Python</h6>
+            <p>
+              По профессии инженер-строитель. Уже более 10 лет строю заводы.
+              Серьезно задумываюсь о переквалификации. 
+              Также есть большое желание применить знания Python в создании системы умного дома на базе Home Assistant
+            </p>
+            <div class="row about-list">
+              <h6 class="theme-color lead">Для связи</h6>
+              <ul class="social-list">
+                <div>
+                  <a href="sleppg@gmail.com">
+                  <img src="{% static 'img/media/mailbox.svg' %}" width="16" height="16" fill="currentColor" class="bi bi-mailbox" viewBox="0 0 16 16">
+                  Почта
+                  </a>
+                </div>
+                <div>
+                  <a href="https://github.com/ilgiz-n">
+                  <img src="{% static 'img/media/github.svg' %}" width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+                  GitHub  
+                  </a>  
+                </div>
+              </ul>
+            </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="about-avatar">
+            <img src="{% static 'img/avatar.jpg' %}" title="" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
