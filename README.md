@@ -8,10 +8,6 @@ Features:
 - subscribe for other blog authors' updates
 - comment posts
 
-## Requirements
-- Django==2.2.19
-- pytz==2022.1
-- sqlparse==0.4.2
 ## How to run 
 ### In dev - mode 
 - Install and activate environment 
