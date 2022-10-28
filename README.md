@@ -9,7 +9,7 @@ Features:
 - comment posts
 
 ## How to run 
-### In dev - mode 
+
 - Install and activate environment 
 - Install dependencies from requirements.txt file:
     ``` 
