@@ -64,5 +64,5 @@ http://127.0.0.1:8000
 
 - Python 3.7.3
 - Django 2.2.16
-- mixer, Pillow==8.3.1, pytest, pytest-django, pytest-pythonpath, requests, six, sorl-thumbnail, Faker
+- mixer, Pillow, pytest, pytest-django, pytest-pythonpath, requests, six, sorl-thumbnail, Faker
 
