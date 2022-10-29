@@ -10,7 +10,7 @@
 
 ## Как запустить проект:
 
-лонировать репозиторий и перейти в него в командной строке:
+Клонировать репозиторий и перейти в него в командной строке:
 
 ```
 git clone https://github.com/ilgiz-n/hw05_final.git
@@ -60,10 +60,9 @@ python3 manage.py runserver
 
 http://127.0.0.1:8000
 
+### Системные требования
 
+- Python 3.7.3
+- Django 2.2.16
+- mixer, Pillow==8.3.1, pytest, pytest-django, pytest-pythonpath, requests, six, sorl-thumbnail, Faker
 
-
-
-
-
-> Written with [StackEdit](https://stackedit.io/).
