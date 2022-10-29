@@ -16,8 +16,10 @@
 git clone https://github.com/ilgiz-n/hw05_final.git
 ```
 
+Перейти в папку с проектом
+
 ```
-cd api_yamdb
+cd hw05_final
 ```
 
 Cоздать и активировать виртуальное окружение:
